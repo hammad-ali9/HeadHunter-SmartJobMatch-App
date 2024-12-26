@@ -1,10 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:head_hunter/bottomNav/bottomNav.dart';
 import 'package:head_hunter/utils/routes/routes-name.dart';
+import 'package:head_hunter/view/auth/choose-view.dart';
+import 'package:head_hunter/view/auth/sign-in-view.dart';
 
 
-import '../../view/auth/register-view.dart';
-import '../../view/home/home-view.dart';
+import '../../view/auth/sign-up.dart';
+import '../../view/bottom/home-view.dart';
 import '../../view/splash/splash-view.dart';
 import '../../view/welcome/welcome-view.dart';
 
@@ -17,12 +20,21 @@ class Routes {
       case RoutesNames.welcomeView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const WelcomeView());
-      case RoutesNames.registerView:
+      case RoutesNames.signUpView:
         return MaterialPageRoute(
-            builder: (BuildContext context) => const RegisterView());
+            builder: (BuildContext context) => const SignUpView());
+        case RoutesNames.signInView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const SignInView());
       case RoutesNames.homeView:
         return MaterialPageRoute(
             builder: (BuildContext context) => const HomeView());
+        case RoutesNames.chooseView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ChooseView());
+        case RoutesNames.bottomNav:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const BottomNavView());
 
       default:
         return MaterialPageRoute(builder: (_) {

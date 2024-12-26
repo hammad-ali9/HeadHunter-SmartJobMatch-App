@@ -1,0 +1,154 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:head_hunter/utils/constants/app-assets.dart';
+import 'package:head_hunter/utils/constants/fonts.dart';
+import 'package:head_hunter/utils/extensions/sizebox.dart';
+
+import '../../utils/constants/colors.dart';
+import '../../utils/customWidgets/my-text.dart';
+import '../../utils/customWidgets/round-button.dart';
+import '../../utils/customWidgets/symetric-padding.dart';
+import '../../utils/customWidgets/text-field.dart';
+import '../../utils/routes/routes-name.dart';
+
+class SignInView extends StatefulWidget {
+  const SignInView({super.key});
+
+  @override
+  State<SignInView> createState() => _SignInViewState();
+}
+
+class _SignInViewState extends State<SignInView> {
+
+
+
+  bool isObscure=true;
+  bool isRemember=true;
+  @override
+  Widget build(BuildContext context) {
+
+
+    return Scaffold(
+      backgroundColor: whiteColor,
+      resizeToAvoidBottomInset: false,
+      body: SymmetricPadding(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              50.height,
+
+              Center(child: MyText(text: "Sign In",size: 32.sp,fontWeight: FontWeight.w600,color: primaryColor,)),
+              5.height,
+              Center(
+                child: MyText(text: "Hi! Welcome, Head Hunters",
+                  fontFamily: AppFonts.poppins,
+                  size: 13.sp,fontWeight: FontWeight.w400,color: blackColor.withOpacity(0.7),),
+              ),
+              50.height,
+
+              MyText(text: "Email",fontWeight: FontWeight.w400,size: 14.sp),
+              5.height,
+              CustomTextFiled(
+                hintText: "example@gmail",
+                isShowPrefixImage: false,
+                isShowPrefixIcon: false,
+                isFilled: true,
+                isBorder: true,
+                borderRadius: 10.r,
+              ),
+              15.height,
+              MyText(text: "Password",fontWeight: FontWeight.w400,size: 14.sp),
+              5.height,
+              CustomTextFiled(
+                hintText: "Your Password",
+                isShowPrefixImage: false,
+                isShowPrefixIcon: false,
+                isFilled: true,
+                isBorder: true,
+                isObscure: isObscure,
+                isPassword: true,
+                beforePasswordIcon: Icons.visibility_off,
+                afterPasswordIcon: Icons.visibility,
+                passwordFunction: (){
+                  setState(() {
+                    isObscure=!isObscure;
+                  });
+                },
+                borderRadius: 10.r,
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                    materialTapTargetSize:MaterialTapTargetSize.shrinkWrap,
+                      activeColor: primaryColor,
+                      shape: const CircleBorder(
+
+                      ),
+                      value: isRemember, onChanged: (v){
+                        setState(() {
+                          isRemember=!isRemember;
+                        });
+                  }),
+                  MyText(text: "Remember me",color: primaryColor,size: 14.sp,fontFamily: AppFonts.poppins,),
+                ],
+              ),
+              20.height,
+              RoundButton(title: "Sign In", onTap: (){
+                Navigator.pushNamed(context, RoutesNames.bottomNav);
+              }),
+              20.height,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                      width: 120.w,
+                      child: const Divider()),
+                  MyText(text: "Or Continue with",size: 14.sp,color: blackColor.withOpacity(0.7),),
+                  SizedBox(
+                      width: 120.w,
+                      child: const Divider()),
+                ],
+              ),
+              20.height,
+              Container(
+                height: 56.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24.r),
+                    border: Border.all(
+                        color: const Color(0xffDCDEE0)
+                    )
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(AppAssets.googleIcon,scale: 1.7,),
+                    20.width,
+                    MyText(text: "Continue with Google",fontFamily: AppFonts.poppins,fontWeight: FontWeight.w500,
+                      size: 16.sp,
+                    )
+                  ],
+                ),
+              ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MyText(text: "Don't have an account? ",fontWeight: FontWeight.w400,size: 14.sp,),
+                  InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, RoutesNames.chooseView);
+                      },
+                      child: MyText(text: "Sign Up",fontWeight: FontWeight.w800,size: 14.sp,color: primaryColor,)),
+                ],
+              ),
+              20.height
+            ],
+          ),
+        ),
+      ),
+
+    );
+  }
+}

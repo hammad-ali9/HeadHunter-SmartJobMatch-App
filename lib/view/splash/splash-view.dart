@@ -27,19 +27,29 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-
-          SpinKitCircle(
-            color: primaryColor,
-            size: 50.sp,
-          ),
-          10.height,
-
-        ],
-      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+            gradientColorOne,
+            gradientColorTwo
+          ],
+          begin: Alignment.topCenter,end: Alignment.bottomRight
+          )
+        ),
+        child: Column(
+          children: [
+            const Spacer(),
+            Image.asset(AppAssets.appIcon,scale: 3,),
+            const Spacer(),
+            SpinKitCircle(
+              color: whiteColor,
+              size: 50.sp,
+            ),
+            10.height,
+          ],
+        ),
+      )
     );
   }
 }

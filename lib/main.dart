@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:head_hunter/providers/loading-provider.dart';
+import 'package:head_hunter/providers/sign-up-provider.dart';
 import 'package:head_hunter/utils/constants/fonts.dart';
+import 'package:head_hunter/utils/constants/load-assets.dart';
 import 'package:head_hunter/utils/routes/app-routes.dart';
 import 'package:head_hunter/utils/routes/routes-name.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+import 'bottomNav/bottomNav.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await preloadImages();
   runApp(const MyApp());
 }
 
@@ -16,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => LoadingProvider()),
+      ChangeNotifierProvider(create: (_) => SignUpProvider()),
 
     ],
       child: ScreenUtilInit(
@@ -34,6 +41,7 @@ class MyApp extends StatelessWidget {
                 useMaterial3: true,
                 fontFamily: AppFonts.monserrat
             ),
+           // home: BottomNavView(),
             initialRoute: RoutesNames.splashView,
             onGenerateRoute: Routes.generateRoute,    ),
         ),

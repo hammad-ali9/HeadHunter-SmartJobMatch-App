@@ -50,9 +50,8 @@ class RoundButton extends StatelessWidget {
               gradient:bgColor==null? const LinearGradient(colors: [
                 gradientColorOne,
                 gradientColorTwo,
-                gradientColorThree,
               ]):null,
-              borderRadius: borderRadius ?? BorderRadius.circular(7.r),
+              borderRadius: borderRadius ?? BorderRadius.circular(6.r),
               border: Border.all(
                   color: borderColor??transparentColor
               )

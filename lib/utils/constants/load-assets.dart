@@ -7,8 +7,11 @@ import 'app-assets.dart';
 Future<void> preloadImages() async {
   final List<String> assetPaths = [
     AppAssets.appIcon,
-    AppAssets.girlBgIcon,
-    AppAssets.micIcon,
+    AppAssets.jobCardIcon,
+    AppAssets.mobileIcon,
+    AppAssets.companyIcon,
+    AppAssets.seekerIcon,
+    AppAssets.googleIcon,
 
   ];
 
