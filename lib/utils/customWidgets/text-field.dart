@@ -34,6 +34,7 @@ class CustomTextFiled extends StatelessWidget {
  final bool? isShowPrefixImage;
  final String? prefixImgUrl;
  final TextAlign? textAlign;
+ final int? maxLine;
  final List<TextInputFormatter>? inputFormatters; // New parame
   const CustomTextFiled(
       {super.key,
@@ -64,6 +65,7 @@ class CustomTextFiled extends StatelessWidget {
         this.prefixImgUrl,
         this.textAlign,
         this.inputFormatters,
+        this.maxLine
       });
 
   @override
@@ -82,6 +84,7 @@ class CustomTextFiled extends StatelessWidget {
       onChanged: onChange,
       keyboardType: keyboardType,
       obscureText: isObscure ?? false,
+      maxLines: maxLine,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
         suffixIcon: isPassword == true

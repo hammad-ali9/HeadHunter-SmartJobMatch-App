@@ -7,11 +7,17 @@ class AppAssets{
   static const String companyIcon='assets/images/companyIcon.png';
   static const String seekerIcon='assets/images/seekerIcon.png';
   static const String googleIcon='assets/images/googleIcon.png';
+  static const String accountIcon='assets/images/accountIcon.png';
+  static const String helpIcon='assets/images/helpIcon.png';
+  static const String furcIcon='assets/images/furcIcon.png';
+  static const String tickIcon='assets/images/tickIcon.png';
 
 
 
   ///dummy assets
-  static const String dummyHouseOne='assets/dummy/';
+  static const String dummyCompanyOne='assets/dummy/dummyCompanyOne.png';
+  static const String dummyCompanyTwo='assets/dummy/dummyCompanyTwo.png';
+  static const String dummyCompanyThree='assets/dummy/dummyCompanyThree.png';
 
 
 

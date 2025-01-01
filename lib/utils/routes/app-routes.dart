@@ -4,6 +4,8 @@ import 'package:head_hunter/bottomNav/bottomNav.dart';
 import 'package:head_hunter/utils/routes/routes-name.dart';
 import 'package:head_hunter/view/auth/choose-view.dart';
 import 'package:head_hunter/view/auth/sign-in-view.dart';
+import 'package:head_hunter/view/job/apply-job-view.dart';
+import 'package:head_hunter/view/job/job-detail-view.dart';
 
 
 import '../../view/auth/sign-up.dart';
@@ -35,6 +37,12 @@ class Routes {
         case RoutesNames.bottomNav:
         return MaterialPageRoute(
             builder: (BuildContext context) => const BottomNavView());
+        case RoutesNames.jobDetailView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const JobDetailView());
+        case RoutesNames.applyJobView:
+        return MaterialPageRoute(
+            builder: (BuildContext context) => const ApplyJobView());
 
       default:
         return MaterialPageRoute(builder: (_) {

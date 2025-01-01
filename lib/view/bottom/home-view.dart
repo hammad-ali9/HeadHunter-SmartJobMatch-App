@@ -130,9 +130,9 @@ class HomeView extends StatelessWidget {
                         ],
                       ),
                       10.height,
-                      const Divider(
-                        color: borderColor,
-                      ),
+                      // const Divider(
+                      //   color: borderColor,
+                      // ),
                       5.height,
                       Row(
                         children: [

@@ -6,6 +6,8 @@ import 'package:head_hunter/utils/constants/fonts.dart';
 import 'package:head_hunter/utils/constants/load-assets.dart';
 import 'package:head_hunter/utils/routes/app-routes.dart';
 import 'package:head_hunter/utils/routes/routes-name.dart';
+import 'package:head_hunter/view/bottom/home-view.dart';
+import 'package:head_hunter/view/job/job-detail-view.dart';
 import 'package:provider/provider.dart';
 
 import 'bottomNav/bottomNav.dart';
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
                 useMaterial3: true,
                 fontFamily: AppFonts.monserrat
             ),
-           // home: BottomNavView(),
+            ///home: JobDetailView(),
             initialRoute: RoutesNames.splashView,
             onGenerateRoute: Routes.generateRoute,    ),
         ),

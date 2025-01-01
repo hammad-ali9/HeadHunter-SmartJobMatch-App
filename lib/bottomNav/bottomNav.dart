@@ -14,7 +14,8 @@ class BottomNavView extends StatefulWidget {
 class _BottomNavViewState extends State<BottomNavView> {
 
   final screens=[
-    const HomeView(),
+   // const HomeView(),
+    const ApplicationView(),
     const ApplicationView(),
     const ProfileView()
   ];
@@ -41,7 +42,7 @@ class _BottomNavViewState extends State<BottomNavView> {
             icon: Icon(Icons.home)),
         BottomNavigationBarItem(
             label: 'Application',
-            icon: Icon(Icons.work_outline)),
+            icon: Icon(Icons.work)),
         BottomNavigationBarItem(
             label: 'Profile',
             icon: Icon(Icons.person_pin)),
