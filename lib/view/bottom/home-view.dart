@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:head_hunter/models/job_card_model.dart';
 import 'package:head_hunter/utils/constants/colors.dart';
+import 'package:head_hunter/utils/customWidgets/home-screen-widgets.dart';
 import 'package:head_hunter/utils/customWidgets/my-text.dart';
 import 'package:head_hunter/utils/customWidgets/text-field.dart';
 import 'package:head_hunter/utils/extensions/sizebox.dart';
+import 'package:head_hunter/utils/routes/app-routes.dart';
+import 'package:head_hunter/utils/routes/routes-name.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
-
   @override
   Widget build(BuildContext context) {
+    List<JobCardModel> dummy = [
+      JobCardModel(
+          imagePath: 'assets/images/lightning.png',
+          jobTitle: 'Chartered Accountant',
+          companyName: 'Ecobank Ghana PLC',
+          level: 'Seniors Level',
+          type: 'Graphic Designer',
+          tags: ['100 % Match', '5 Slots Remaining']),
+      JobCardModel(
+          imagePath: 'assets/images/lightning.png',
+          jobTitle: 'Chartered Accountant',
+          companyName: 'Ecobank Ghana PLC',
+          level: 'Seniors Level',
+          type: 'Graphic Designer',
+          tags: ['100 % Match', '5 Slots Remaining'])
+    ];
     return SafeArea(
       child: Scaffold(
         backgroundColor: whiteColor,
@@ -70,17 +89,18 @@ class HomeView extends StatelessWidget {
                 MyText(
                     text: "Category", fontWeight: FontWeight.w400, size: 16.sp),
                 20.height,
-                Container(
-                  width: 70.w,
+                SizedBox(
                   height: 70.h,
-                  padding:
-                      EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: borderColor),
-                      borderRadius: BorderRadius.circular(20.r)),
-                  child: Image.asset(
-                    'assets/images/lightning.png',
-                    fit: BoxFit.scaleDown,
+                  child: GridView.builder(
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 16.w,
+                        childAspectRatio: 1),
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return category('assets/images/lightning.png');
+                    },
                   ),
                 ),
                 20.height,
@@ -89,80 +109,32 @@ class HomeView extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     size: 16.sp),
                 20.height,
-                Container(
-                  width: double.maxFinite,
-                  padding: EdgeInsets.all(16.w),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: borderColor),
-                      borderRadius: BorderRadius.circular(12.r)),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 48.w,
-                            height: 48.h,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.r)),
-                            child: Image.asset(
-                              'assets/images/lightning.png',
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ),
-                          10.width,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MyText(
-                                text: 'Chartered Accountant',
-                                color: primaryColor,
-                                fontWeight: FontWeight.w400,
-                                size: 12.sp,
-                              ),
-                              MyText(
-                                text: 'Ecobank Ghana PLC',
-                                color: purpleColor,
-                                fontWeight: FontWeight.w400,
-                                size: 14.sp,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      10.height,
-                      // const Divider(
-                      //   color: borderColor,
-                      // ),
-                      5.height,
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: 48.h,
-                            width: 48.w,
-                          ),
-                          10.width,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              MyText(
-                                text: 'Seniors Level',
-                                color: purpleColor,
-                                fontWeight: FontWeight.w400,
-                                size: 14.sp,
-                              ),
-                              MyText(
-                                text: 'Graphic Designer',
-                                color: primaryColor,
-                                fontWeight: FontWeight.w400,
-                                size: 12.sp,
-                              ),
-                              15.height,
-                              _customTag(['100 % Match', '5 Slots Remaining']),
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
+                SizedBox(
+                  height: 200.h,
+                  child: GridView.builder(
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 16.w,
+                        childAspectRatio: 0.6),
+                    itemCount: dummy.length,
+                    itemBuilder: (context, index) {
+                      final job = dummy[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, RoutesNames.jobDetailView);
+                        },
+                        child: jobCard(
+                          job.imagePath,
+                          job.jobTitle,
+                          job.companyName,
+                          job.level,
+                          job.type,
+                          job.tags,
+                        ),
+                      );
+                    },
                   ),
                 ),
                 20.height,
@@ -171,6 +143,11 @@ class HomeView extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     size: 16.sp),
                 20.height,
+                for (var job in dummy) ...{
+                  jobCard(job.imagePath, job.jobTitle, job.companyName,
+                      job.level, job.type, job.tags),
+                  10.height,
+                }
               ],
             ),
           ),
@@ -178,27 +155,4 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-}
-
-_customTag(List<String> text) {
-  return Row(
-    children: [
-      for (int i = 0; i < text.length;) ...{
-        Container(
-          padding: EdgeInsets.all(8.sp),
-          decoration: BoxDecoration(
-              color: matchTagColor,
-              border: Border.all(color: borderColor),
-              borderRadius: BorderRadius.circular(4.r)),
-          child: MyText(
-            text: text[i],
-            size: 12.sp,
-            color: purpleColor,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        5.width,
-      }
-    ],
-  );
 }

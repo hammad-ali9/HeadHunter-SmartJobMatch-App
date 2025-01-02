@@ -12,42 +12,33 @@ class BottomNavView extends StatefulWidget {
 }
 
 class _BottomNavViewState extends State<BottomNavView> {
-
-  final screens=[
-   // const HomeView(),
-    const ApplicationView(),
+  final screens = [
+    const HomeView(),
     const ApplicationView(),
     const ProfileView()
   ];
-  int currentIndex=0;
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: whiteColor,
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (n){
-          setState(() {
-            currentIndex=n;
-          });
-        },
-        selectedItemColor: primaryColor,
-          selectedLabelStyle: const TextStyle(
-            color: primaryColor
-          ),
-          items: const[
-        BottomNavigationBarItem(
-            label: 'Home',
-            icon: Icon(Icons.home)),
-        BottomNavigationBarItem(
-            label: 'Application',
-            icon: Icon(Icons.work)),
-        BottomNavigationBarItem(
-            label: 'Profile',
-            icon: Icon(Icons.person_pin)),
-      ]),
-
+          currentIndex: currentIndex,
+          onTap: (n) {
+            setState(() {
+              currentIndex = n;
+            });
+          },
+          selectedItemColor: primaryColor,
+          selectedLabelStyle: const TextStyle(color: primaryColor),
+          items: const [
+            BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
+            BottomNavigationBarItem(
+                label: 'Application', icon: Icon(Icons.work)),
+            BottomNavigationBarItem(
+                label: 'Profile', icon: Icon(Icons.person_pin)),
+          ]),
     );
   }
 }

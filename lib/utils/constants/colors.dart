@@ -5,6 +5,7 @@ const blackColor = Colors.black;
 const greenColor = Colors.green;
 const redColor = Colors.red;
 const greyColor = Colors.grey;
+const lightGreyColor = Color(0xffF5F5F5);
 const midGreyColor = Color(0xff798AA3);
 const fillColor = Color(0xffFBFCFE);
 const borderColor = Color(0xffD3DFE7);
