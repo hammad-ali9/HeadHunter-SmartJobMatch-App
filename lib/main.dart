@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:head_hunter/providers/loading-provider.dart';
@@ -6,14 +7,15 @@ import 'package:head_hunter/utils/constants/fonts.dart';
 import 'package:head_hunter/utils/constants/load-assets.dart';
 import 'package:head_hunter/utils/routes/app-routes.dart';
 import 'package:head_hunter/utils/routes/routes-name.dart';
-import 'package:head_hunter/view/bottom/home-view.dart';
-import 'package:head_hunter/view/job/job-detail-view.dart';
 import 'package:provider/provider.dart';
 
-import 'bottomNav/bottomNav.dart';
+import 'firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await preloadImages();
   runApp(const MyApp());
 }
@@ -25,7 +27,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => LoadingProvider()),
       ChangeNotifierProvider(create: (_) => SignUpProvider()),
-
     ],
       child: ScreenUtilInit(
         designSize:  const Size(393, 852),
@@ -43,9 +44,10 @@ class MyApp extends StatelessWidget {
                 useMaterial3: true,
                 fontFamily: AppFonts.monserrat
             ),
-            ///home: JobDetailView(),
-            initialRoute: RoutesNames.splashView,
-            onGenerateRoute: Routes.generateRoute,    ),
+           home: splashView(),
+            // initialRoute: RoutesNames.splashView,
+            // onGenerateRoute: Routes.generateRoute,
+          ),
         ),
       ),
 

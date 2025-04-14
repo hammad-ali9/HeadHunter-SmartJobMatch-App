@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:head_hunter/models/auth-model.dart';
-import 'package:head_hunter/models/seeker-model.dart';
-import 'package:head_hunter/providers/sign-up-provider.dart';
+import 'package:head_hunter/models/company-model.dart';
 import 'package:head_hunter/services/auth-services.dart';
 import 'package:head_hunter/utils/constants/app-assets.dart';
 import 'package:head_hunter/utils/constants/fonts.dart';
-import 'package:head_hunter/utils/extensions/global-functions.dart';
 import 'package:head_hunter/utils/extensions/sizebox.dart';
 
-import '../../utils/constants/colors.dart';
-import '../../utils/customWidgets/my-text.dart';
-import '../../utils/customWidgets/round-button.dart';
-import '../../utils/customWidgets/symetric-padding.dart';
-import '../../utils/customWidgets/text-field.dart';
-import '../../utils/routes/routes-name.dart';
+import '../../../models/auth-model.dart';
+import '../../../utils/constants/colors.dart';
+import '../../../utils/customWidgets/my-text.dart';
+import '../../../utils/customWidgets/round-button.dart';
+import '../../../utils/customWidgets/symetric-padding.dart';
+import '../../../utils/customWidgets/text-field.dart';
+import '../../../utils/extensions/global-functions.dart';
+import '../../../utils/routes/routes-name.dart';
 
-class SignUpView extends StatefulWidget {
-  const SignUpView({super.key});
+
+class CompanySignUpView extends StatefulWidget {
+  const CompanySignUpView({super.key});
 
   @override
-  State<SignUpView> createState() => _SignUpViewState();
+  State<CompanySignUpView> createState() => _CompanySignUpViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> {
+class _CompanySignUpViewState extends State<CompanySignUpView> {
 
 
-  final userNameController=TextEditingController();
-  final ageController=TextEditingController();
-  final genderController=TextEditingController();
+  final companyNameController=TextEditingController();
+  final numberOfEmployeeController=TextEditingController();
+  final locationController=TextEditingController();
   final emailController=TextEditingController();
   final passwordController=TextEditingController();
   bool isObscure=true;
@@ -53,12 +53,12 @@ class _SignUpViewState extends State<SignUpView> {
                     fontFamily: AppFonts.poppins,
                     size: 13.sp,fontWeight: FontWeight.w400,color: blackColor.withOpacity(0.7),),
                 ),
-                 50.height,
-                 MyText(text: "Username",fontWeight: FontWeight.w400,size: 14.sp),
-                 5.height,
-                 CustomTextFiled(
-                   controller: userNameController,
-                  hintText: "Your username",
+                50.height,
+                MyText(text: "Company Name",fontWeight: FontWeight.w400,size: 14.sp),
+                5.height,
+                CustomTextFiled(
+                  controller: companyNameController,
+                  hintText: "Company Name",
                   isShowPrefixImage: false,
                   isShowPrefixIcon: false,
                   isFilled: true,
@@ -68,25 +68,24 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
 
                 15.height,
-                MyText(text: "Age",fontWeight: FontWeight.w400,size: 14.sp),
+                MyText(text: "Number of Employee",fontWeight: FontWeight.w400,size: 14.sp),
                 5.height,
                 CustomTextFiled(
-                  controller: ageController,
-                  hintText: "Your Age",
-                  isShowPrefixImage: false,
-                  isShowPrefixIcon: false,
-                  isFilled: true,
-                  isBorder: true,
-                  borderRadius: 10.r,
+                  controller: numberOfEmployeeController,
+                  hintText: "Number of Employee",
                   keyboardType: TextInputType.number,
-
+                  isShowPrefixImage: false,
+                  isShowPrefixIcon: false,
+                  isFilled: true,
+                  isBorder: true,
+                  borderRadius: 10.r,
                 ),
                 15.height,
-                MyText(text: "Gender",fontWeight: FontWeight.w400,size: 14.sp),
+                MyText(text: "Location",fontWeight: FontWeight.w400,size: 14.sp),
                 5.height,
                 CustomTextFiled(
-                  controller: genderController,
-                  hintText: "Your Gender",
+                  controller: locationController,
+                  hintText: "Your Location",
                   keyboardType: TextInputType.text,
                   isShowPrefixImage: false,
                   isShowPrefixIcon: false,
@@ -116,6 +115,7 @@ class _SignUpViewState extends State<SignUpView> {
                   isShowPrefixIcon: false,
                   isFilled: true,
                   isBorder: true,
+                  maxLine: 1,
                   isObscure: isObscure,
                   isPassword: true,
                   beforePasswordIcon: Icons.visibility_off,
@@ -131,33 +131,24 @@ class _SignUpViewState extends State<SignUpView> {
                 RoundButton(
                     isLoad: true,
                     title: "Register", onTap: (){
-                      if(userNameController.text.isEmpty||
-                          ageController.text.isEmpty||
-                          genderController.text.isEmpty||
-                          emailController.text.isEmpty||
-                          passwordController.text.isEmpty){
-                        showSnackbar(context, "Please enter complete detail",color: redColor);
-                        return;
-                      }
-                      if(genderController.text.trim()!='Male'&&
-                          genderController.text.trim()!='male'&&
-                          genderController.text.trim()!='Female'&&genderController.text.trim()!='female'&&
-                          genderController.text.trim()!='Other'&&genderController.text.trim()!='other'){
-                        showSnackbar(context, "Please enter correct gender",color: redColor);
-                        return;
-                      }
-                  var model=AuthModel(email: emailController.text.trim(), password: passwordController.text.trim());
-                  var seekerModel=SeekerModel(
-                      userId: '',
-                      userName: userNameController.text.trim(),
-                      age: int.parse(ageController.text.toString()),
-                      gender: genderController.text.toString(),
-                      email: emailController.text.trim().toString(),
-                      password: passwordController.text.trim(),
-                      userRole: RoleTypes.jobSeeker);
 
-                  AuthServices.signUpUser(model, seekerModel, context);
-                  // Navigator.pushNamed(context, RoutesNames.bottomNav);
+                  if(companyNameController.text.isEmpty||
+                      numberOfEmployeeController.text.isEmpty||
+                      locationController.text.isEmpty||
+                      emailController.text.isEmpty||
+                      passwordController.text.isEmpty){
+                    showSnackbar(context, "Please enter complete detail",color: redColor);
+                    return;
+                  }
+                  var loginModel=AuthModel(email: emailController.text.trim(), password: passwordController.text.trim());
+                  var model=CompanyModel(
+                      companyId: '',
+                      companyName: companyNameController.text.trim(),
+                      numberOfEmployee: int.parse(numberOfEmployeeController.text.trim().toString()),
+                      location: locationController.text.trim(),
+                      email: emailController.text);
+                  AuthServices.signUpCompany(loginModel, model, context);
+
                 }),
                 20.height,
                 Row(
@@ -177,10 +168,10 @@ class _SignUpViewState extends State<SignUpView> {
                   height: 56.h,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24.r),
-                    border: Border.all(
-                      color: const Color(0xffDCDEE0)
-                    )
+                      borderRadius: BorderRadius.circular(24.r),
+                      border: Border.all(
+                          color: const Color(0xffDCDEE0)
+                      )
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +179,7 @@ class _SignUpViewState extends State<SignUpView> {
                       Image.asset(AppAssets.googleIcon,scale: 1.7,),
                       20.width,
                       MyText(text: "Continue with Google",fontFamily: AppFonts.poppins,fontWeight: FontWeight.w500,
-                      size: 16.sp,
+                        size: 16.sp,
                       )
                     ],
                   ),

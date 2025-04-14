@@ -7,64 +7,67 @@ import '../constants/colors.dart';
 import '../constants/fonts.dart';
 
 class CustomTextFiled extends StatelessWidget {
-  final String? hintText;
-  final TextEditingController? controller;
-  final bool? isFilled;
-  final Color? fillColor;
-  final String? fontFamily;
-  final Color? hintColor;
-  final FontWeight? fontWeight;
-  final double? hintTextSize;
-  final String? Function(String?)? validator;
-  final String? Function(String?)? onChange;
-  final String? Function()? passwordFunction;
-  final double? borderRadius;
-  final bool? isBorder;
-  final bool? isFocusBorder;
-  final IconData? suffixIcon;
-  final IconData? prefixIcon;
-  final bool? isErrorBorder;
-  final TextInputType? keyboardType;
-  final bool? isPassword;
-  final IconData? beforePasswordIcon;
-  final IconData? afterPasswordIcon;
-  final bool? isObscure;
-  final bool? isShowPrefixIcon;
-  final bool? isShowPrefixImage;
-  final String? prefixImgUrl;
-  final TextAlign? textAlign;
-  final int? maxLine;
-  final List<TextInputFormatter>? inputFormatters; // New parame
+ final String? hintText;
+ final TextEditingController? controller;
+ final bool? isFilled;
+ final Color? fillColor;
+ final String? fontFamily;
+ final Color? hintColor;
+ final  FontWeight? fontWeight;
+ final double? hintTextSize;
+ final  String? Function(String?)? validator;
+ final String? Function(String?)? onChange;
+ final String? Function(String?)? onSubmit;
+ final String? Function()? passwordFunction;
+ final  double? borderRadius;
+ final bool? isBorder;
+ final bool? isFocusBorder;
+ final  IconData? suffixIcon;
+ final IconData? prefixIcon;
+ final  bool? isErrorBorder;
+ final TextInputType? keyboardType;
+ final bool? isPassword;
+ final  IconData? beforePasswordIcon;
+ final IconData? afterPasswordIcon;
+ final bool? isObscure;
+ final bool? isShowPrefixIcon;
+ final bool? isShowPrefixImage;
+ final String? prefixImgUrl;
+ final TextAlign? textAlign;
+ final int? maxLine;
+ final List<TextInputFormatter>? inputFormatters; // New parame
   const CustomTextFiled(
       {super.key,
-      this.hintText,
-      this.controller,
-      this.isFilled,
-      this.fillColor,
-      this.fontFamily,
-      this.hintColor,
-      this.hintTextSize,
-      this.fontWeight,
-      this.validator,
-      this.isBorder,
-      this.borderRadius,
-      this.suffixIcon,
-      this.prefixIcon,
-      this.isErrorBorder,
-      this.onChange,
-      this.keyboardType,
-      this.isPassword,
-      this.passwordFunction,
-      this.beforePasswordIcon,
-      this.isObscure,
-      this.afterPasswordIcon,
-      this.isShowPrefixIcon,
-      this.isFocusBorder,
-      this.isShowPrefixImage = false,
-      this.prefixImgUrl,
-      this.textAlign,
-      this.inputFormatters,
-      this.maxLine});
+        this.hintText,
+        this.controller,
+        this.isFilled,
+        this.fillColor,
+        this.fontFamily,
+        this.hintColor,
+        this.hintTextSize,
+        this.fontWeight,
+        this.validator,
+        this.isBorder,
+        this.borderRadius,
+        this.suffixIcon,
+        this.prefixIcon,
+        this.isErrorBorder,
+        this.onChange,
+        this.keyboardType,
+        this.isPassword,
+        this.passwordFunction,
+        this.beforePasswordIcon,
+        this.isObscure,
+        this.afterPasswordIcon,
+        this.isShowPrefixIcon,
+        this.isFocusBorder,
+        this.isShowPrefixImage=false,
+        this.prefixImgUrl,
+        this.textAlign,
+        this.inputFormatters,
+        this.maxLine,
+        this.onSubmit
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +83,11 @@ class CustomTextFiled extends StatelessWidget {
       controller: controller,
       validator: validator,
       onChanged: onChange,
+      onFieldSubmitted: onSubmit,
       keyboardType: keyboardType,
       obscureText: isObscure ?? false,
       maxLines: maxLine ?? 1,
+
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
         suffixIcon: isPassword == true

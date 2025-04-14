@@ -17,6 +17,8 @@ class ChooseView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider=Provider.of<SignUpProvider>(context,listen: false);
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(child: SymmetricPadding(
@@ -182,10 +184,16 @@ class ChooseView extends StatelessWidget {
              ),
            );
          }),
-          Spacer(),
+          const Spacer(),
           RoundButton(title: "Next", onTap: (){
-            Navigator.pushNamed(context, RoutesNames.signUpView);
-          }),
+
+            if(provider.selectedType==RoleTypes.company){
+              Navigator.pushNamed(context, RoutesNames.companySignUpView);
+
+            }else{
+              Navigator.pushNamed(context, RoutesNames.signUpView);
+
+            }                          }),
           20.height,
 
 

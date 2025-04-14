@@ -11,4 +11,9 @@ class RoutesNames{
   static const String applyJobView = 'apply-job-view';
 
 
+  /// company routes
+  static const String companySignUpView = 'company-sign-up-view';
+  static const String companyBottomNav = 'company-bottom-nav-view';
+  static const String jobPostView = 'job-post-view';
+
 }

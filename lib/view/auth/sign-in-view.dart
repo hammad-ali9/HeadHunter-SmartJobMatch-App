@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:head_hunter/models/auth-model.dart';
+import 'package:head_hunter/providers/sign-up-provider.dart';
+import 'package:head_hunter/services/auth-services.dart';
 import 'package:head_hunter/utils/constants/app-assets.dart';
 import 'package:head_hunter/utils/constants/fonts.dart';
 import 'package:head_hunter/utils/extensions/sizebox.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/constants/colors.dart';
 import '../../utils/customWidgets/my-text.dart';
 import '../../utils/customWidgets/round-button.dart';
 import '../../utils/customWidgets/symetric-padding.dart';
 import '../../utils/customWidgets/text-field.dart';
+import '../../utils/extensions/global-functions.dart';
 import '../../utils/routes/routes-name.dart';
 
 class SignInView extends StatefulWidget {
@@ -24,10 +29,11 @@ class _SignInViewState extends State<SignInView> {
 
   bool isObscure=true;
   bool isRemember=true;
+  final emailController=TextEditingController();
+  final passwordController=TextEditingController();
   @override
   Widget build(BuildContext context) {
-
-
+    final provider=Provider.of<SignUpProvider>(context,listen: false);
     return Scaffold(
       backgroundColor: whiteColor,
       resizeToAvoidBottomInset: false,
@@ -50,6 +56,7 @@ class _SignInViewState extends State<SignInView> {
               MyText(text: "Email",fontWeight: FontWeight.w400,size: 14.sp),
               5.height,
               CustomTextFiled(
+                controller: emailController,
                 hintText: "example@gmail",
                 isShowPrefixImage: false,
                 isShowPrefixIcon: false,
@@ -61,6 +68,7 @@ class _SignInViewState extends State<SignInView> {
               MyText(text: "Password",fontWeight: FontWeight.w400,size: 14.sp),
               5.height,
               CustomTextFiled(
+                controller: passwordController,
                 hintText: "Your Password",
                 isShowPrefixImage: false,
                 isShowPrefixIcon: false,
@@ -94,8 +102,19 @@ class _SignInViewState extends State<SignInView> {
                 ],
               ),
               20.height,
-              RoundButton(title: "Sign In", onTap: (){
-                Navigator.pushNamed(context, RoutesNames.bottomNav);
+              RoundButton(
+                  isLoad: true,
+                  title: "Sign In", onTap: (){
+                if(
+                    emailController.text.isEmpty||
+                    passwordController.text.isEmpty){
+                  showSnackbar(context, "Missing email or password",color: redColor);
+                  return;
+                }
+
+                var model=AuthModel(email: emailController.text.trim(), password: passwordController.text.trim());
+                AuthServices.loginUser(model, context);
+
               }),
               20.height,
               Row(

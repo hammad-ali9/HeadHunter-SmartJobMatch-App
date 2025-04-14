@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +16,30 @@ import 'package:head_hunter/utils/routes/routes-name.dart';
 class WelcomeView extends StatelessWidget {
   const WelcomeView({super.key});
 
+  Future<double> calculateSimilarity(String resumePath, String jobDescription) async {
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse('http://your-api-url/api/similarity'),
+    );
+
+    request.files.add(await http.MultipartFile.fromPath('resume', resumePath));
+    request.fields['job_description'] = jobDescription;
+
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      var responseData = await response.stream.toBytes();
+      var jsonResponse = json.decode(String.fromCharCodes(responseData));
+      return jsonResponse['similarity_score'];
+    } else {
+      throw Exception('Failed to calculate similarity');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String resumePath = 'path/to/resume.pdf';
+    String jobDescription = 'Your job description here';
+
     return Scaffold(
       backgroundColor: Color(0xffDAF2FF),
       body: Stack(
@@ -98,6 +122,24 @@ class WelcomeView extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: FutureBuilder<double>(
+              future: calculateSimilarity(resumePath, jobDescription),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return Text(
+                    'Similarity Score: ${snapshot.data?.toStringAsFixed(2)}%',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  );
+                }
+              },
             ),
           )
         ],

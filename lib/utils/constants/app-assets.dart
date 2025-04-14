@@ -12,6 +12,7 @@ class AppAssets {
   static const String documentUpload = 'assets/images/documentUpload.png';
   static const String document = 'assets/images/document.png';
   static const String success = 'assets/images/success.png';
+  static const String logOutIcon = 'assets/images/logOutIcon.png';
 
   ///dummy assets
   static const String dummyCompanyOne = 'assets/dummy/dummyCompanyOne.png';

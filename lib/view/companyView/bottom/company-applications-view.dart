@@ -12,16 +12,17 @@ import 'package:head_hunter/utils/customWidgets/top-widgets.dart';
 import 'package:head_hunter/utils/extensions/global-functions.dart';
 import 'package:head_hunter/utils/extensions/sizebox.dart';
 
-import '../../utils/customWidgets/my-text.dart';
+import '../../../utils/customWidgets/my-text.dart';
 
-class ApplicationView extends StatefulWidget {
-  const ApplicationView({super.key});
+
+class CompanyApplicationView extends StatefulWidget {
+  const CompanyApplicationView({super.key});
 
   @override
-  State<ApplicationView> createState() => _ApplicationViewState();
+  State<CompanyApplicationView> createState() => _CompanyApplicationViewState();
 }
 
-class _ApplicationViewState extends State<ApplicationView> {
+class _CompanyApplicationViewState extends State<CompanyApplicationView> {
   final searchController=TextEditingController();
   final currentUser=FirebaseAuth.instance.currentUser!.uid;
   @override
@@ -55,11 +56,11 @@ class _ApplicationViewState extends State<ApplicationView> {
               const TopWidget(title: "Applications"),
               20.height,
               CustomTextFiled(
-                 controller: searchController,
+                controller: searchController,
                 onChange: (v){
-                   setState(() {
+                  setState(() {
 
-                   });
+                  });
                 },
                 hintText: "Search for a job or company",
                 isShowPrefixImage: false,
@@ -72,7 +73,7 @@ class _ApplicationViewState extends State<ApplicationView> {
               ),
               10.height,
               StreamBuilder(
-                  stream: JobServices.fetchAllJobStreamForUserApplied(currentUser),
+                  stream: JobServices.fetchAllJobForSpecificStream(),
                   builder: (context,snapshot){
                     if(snapshot.connectionState==ConnectionState.waiting){
                       return Padding(
@@ -94,18 +95,19 @@ class _ApplicationViewState extends State<ApplicationView> {
                         ),
                       );
                     }
-                return Expanded(
-                    child: ListView.builder(
-                        itemCount: data!.length,
-                        itemBuilder: (context,index){
-                          var dummyData=data[index];
-
-                          return ApplicationSentWidget(
-                            jobTitle: capitalizeEachWord(dummyData.openJob),
-                              companyTitle: capitalizeEachWord(dummyData.companyName),
-                              imgUrl: AppAssets.dummyCompanyOne);
-                        }));
-              })
+                    return Expanded(
+                        child: ListView.builder(
+                            itemCount: data!.length,
+                            itemBuilder: (context,index){
+                              var dummyData=data[index];
+                              return ApplicationSentWidget(
+                                totalApplications: dummyData.applicationsId.length.toString(),
+                                  jobTitle: capitalizeEachWord(dummyData.openJob),
+                                  companyTitle: capitalizeEachWord(dummyData.companyName),
+                                  imgUrl: AppAssets.dummyCompanyOne,
+                                  applicationDetails: []);
+                            }));
+                  })
 
 
             ],
@@ -118,23 +120,32 @@ class _ApplicationViewState extends State<ApplicationView> {
 class ApplicationSentWidget extends StatelessWidget {
   final String? jobTitle;
   final String companyTitle;
+  final String totalApplications;
   final String imgUrl;
-  const ApplicationSentWidget({super.key, required this.companyTitle, required this.imgUrl, this.jobTitle});
+  final List<ApplicationDetail> applicationDetails;
+
+  const ApplicationSentWidget({
+    super.key, 
+    required this.companyTitle, 
+    required this.imgUrl, 
+    this.jobTitle, 
+    required this.totalApplications,
+    required this.applicationDetails
+  });
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      //height: 104.h,
+    return Container(
       margin: EdgeInsets.only(bottom: 10.h),
       width: double.infinity,
       decoration: const BoxDecoration(
-          border: Border(
-              bottom: BorderSide(
-                  width: 1,
-                  color:Color(0xffD3DFE7)
-              )
-          ),
-          color: Color(0xffFBFCFE)
+        border: Border(
+          bottom: BorderSide(
+            width: 1,
+            color: Color(0xffD3DFE7)
+          )
+        ),
+        color: Color(0xffFBFCFE)
       ),
       child: Padding(
         padding: EdgeInsets.all(15.sp),
@@ -147,9 +158,9 @@ class ApplicationSentWidget extends StatelessWidget {
                   height: 48.h,
                   width: 48.w,
                   decoration: BoxDecoration(
-                      color: Colors.red,
-                      image: DecorationImage(image: AssetImage(imgUrl)),
-                      borderRadius: BorderRadius.circular(8.r)
+                    color: Colors.red,
+                    image: DecorationImage(image: AssetImage(imgUrl)),
+                    borderRadius: BorderRadius.circular(8.r)
                   ),
                 ),
                 15.width,
@@ -157,45 +168,76 @@ class ApplicationSentWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                        width: 200.w,
-
-                        child: MyText(text: jobTitle??'ss',                          overflow: TextOverflow.clip,
-                          fontWeight: FontWeight.w500,size: 14.sp,fontFamily: AppFonts.poppins,)),
+                      width: 200.w,
+                      child: MyText(
+                        text: jobTitle ?? 'ss',
+                        overflow: TextOverflow.clip,
+                        fontWeight: FontWeight.w500,
+                        size: 14.sp,
+                        fontFamily: AppFonts.poppins,
+                      ),
+                    ),
                     2.height,
                     SizedBox(
                       width: 200.w,
-
-                      child: MyText(text: companyTitle,                          overflow: TextOverflow.clip,
+                      child: MyText(
+                        text: companyTitle,
                         fontWeight: FontWeight.w400,
                         size: 12.sp,
+                        overflow: TextOverflow.clip,
                         fontFamily: AppFonts.poppins,
                         color: const Color(0xff858BBD),
                       ),
                     ),
                     15.height,
-                    Container(
-                      width: 115.w,
-                      height: 24.h,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color:const Color(0xffD3DFE7),
+                    Row(
+                      children: [
+                        Container(
+                          width: 115.w,
+                          height: 24.h,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color(0xffD3DFE7),
                               width: 2
+                            ),
+                            borderRadius: BorderRadius.circular(4.r)
                           ),
-                          borderRadius: BorderRadius.circular(4.r)
-                      ),
-                      child: Center(
-                        child:  MyText(text: "Application sent",
-                          fontWeight: FontWeight.w400,
-                          size: 12.sp,
-                          fontFamily: AppFonts.poppins,
-                          color: primaryColor,
+                          child: Center(
+                            child: MyText(
+                              text: "${totalApplications} Applications",
+                              fontWeight: FontWeight.w400,
+                              size: 12.sp,
+                              fontFamily: AppFonts.poppins,
+                              color: primaryColor,
+                            ),
+                          ),
                         ),
-
-                      ),
+                        10.width,
+                        if (applicationDetails.isNotEmpty)
+                        Container(
+                          width: 115.w,
+                          height: 24.h,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color(0xffD3DFE7),
+                              width: 2
+                            ),
+                            borderRadius: BorderRadius.circular(4.r)
+                          ),
+                          child: Center(
+                            child: MyText(
+                              text: "${applicationDetails.first.similarityScore.toStringAsFixed(1)}% Match",
+                              fontWeight: FontWeight.w400,
+                              size: 12.sp,
+                              fontFamily: AppFonts.poppins,
+                              color: primaryColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   ],
                 ),
-
               ],
             )
           ],
